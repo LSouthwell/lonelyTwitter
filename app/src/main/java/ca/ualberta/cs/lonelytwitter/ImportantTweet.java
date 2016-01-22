@@ -1,5 +1,6 @@
 package ca.ualberta.cs.lonelytwitter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,8 +12,8 @@ public class ImportantTweet extends Tweet implements Tweetable {
         return Boolean.TRUE;
     }
 
-    public ImportantTweet(Date date, String message) {
-        super(date, message);
+    public ImportantTweet(Date date, String message, ArrayList moodList) {
+        super(date, message,moodList);
     }
 
     public ImportantTweet(String message) {

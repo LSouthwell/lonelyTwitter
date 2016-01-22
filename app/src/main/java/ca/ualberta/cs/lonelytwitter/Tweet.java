@@ -20,7 +20,9 @@ public abstract class Tweet {
     }
 
     public Tweet(String message){
+        this.date = new Date();
         this.message = message;
+
     }
 
     public void setMessage(String message) throws TweetTooLongException {
@@ -33,4 +35,10 @@ public abstract class Tweet {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString(){
+        return date.toString() + " | " + message;
+    }
+
 }
