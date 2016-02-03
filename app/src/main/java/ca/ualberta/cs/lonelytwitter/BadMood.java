@@ -3,7 +3,7 @@ package ca.ualberta.cs.lonelytwitter;
 import java.util.Date;
 
 /**
- * Created by southwel on 1/12/16.
+ * Class for bad moods attached to tweets
  */
 public class BadMood extends TweetMood {
     public BadMood (Date date, String message) {

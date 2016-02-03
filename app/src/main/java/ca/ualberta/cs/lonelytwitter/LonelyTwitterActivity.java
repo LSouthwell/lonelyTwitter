@@ -8,12 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,6 +25,14 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+/**
+ * The main activity for a small, personal Twitter app to capture notes and comments.
+ * <p>it saves the input tweets in the json files.</p>
+ * @since 1.2.1
+ * @see LonelyTwitterActivity for more information
+ *
+ */
 
 public class LonelyTwitterActivity extends Activity {
 
@@ -49,6 +59,10 @@ public class LonelyTwitterActivity extends Activity {
 		Button clearButton = (Button) findViewById(R.id.clear);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
+			/**
+			 * Code for when you click the button
+			 * @param v
+			 */
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
@@ -63,8 +77,14 @@ public class LonelyTwitterActivity extends Activity {
 			}
 		});
 
-
+		/**
+		 * Called when the clear button is pressed
+		 */
 		clearButton.setOnClickListener(new View.OnClickListener() {
+			/**
+			 * Run when the clear button is pressed
+			 * @param v
+			 */
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 
@@ -78,7 +98,9 @@ public class LonelyTwitterActivity extends Activity {
 
 	}
 
-
+	/**
+	 * Called on start
+	 */
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -90,6 +112,9 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+	/**
+	 * Code for loading save information from file
+	 */
 	private void loadFromFile() {
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
@@ -110,6 +135,9 @@ public class LonelyTwitterActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Code to save in file
+	 */
 	private void saveInFile() {
 		try {
 			FileOutputStream fos = openFileOutput(FILENAME,

@@ -3,7 +3,7 @@ package ca.ualberta.cs.lonelytwitter;
 import java.util.Date;
 
 /**
- * Created by southwel on 1/12/16.
+ * Interface for Tweetable tweets
  */
 public interface Tweetable {
     // getMessage returns the tweet message.

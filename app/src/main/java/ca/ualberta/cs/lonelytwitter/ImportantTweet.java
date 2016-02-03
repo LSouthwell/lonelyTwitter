@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by southwel on 1/12/16.
+ * Class for Important Tweets
  */
 public class ImportantTweet extends Tweet implements Tweetable {
+    /**
+     * All important tweets are in fact important.
+     * @return TRUE
+     */
     @Override
     public Boolean isImportant() {
         return Boolean.TRUE;
