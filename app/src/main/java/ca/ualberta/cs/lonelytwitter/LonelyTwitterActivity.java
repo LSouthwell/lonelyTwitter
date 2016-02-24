@@ -1,6 +1,7 @@
 package ca.ualberta.cs.lonelytwitter;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class LonelyTwitterActivity extends Activity {
 
@@ -45,23 +47,30 @@ public class LonelyTwitterActivity extends Activity {
 
         bodyText = (EditText) findViewById(R.id.body);
         Button saveButton = (Button) findViewById(R.id.save);
+
+       // Button searchButton = (Button) findViewById(R.id.clear);
+
         oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 String text = bodyText.getText().toString();
-                Tweet latestTweet = new NormalTweet(text);
+                NormalTweet latestTweet = new NormalTweet(text);
 
                 tweets.add(latestTweet);
                 adapter.notifyDataSetChanged();
 
-                // TODO: Replace with Elasticsearch
-                saveInFile();
+                // TODO: Replace with Elasticsearch (done)
+                AsyncTask<NormalTweet, Void, Void> execute = new ElasticsearchTweetController.AddTweetTask().execute(latestTweet);
+                //saveInFile();
 
                 setResult(RESULT_OK);
             }
         });
+
+
+
     }
 
     @Override
@@ -69,8 +78,18 @@ public class LonelyTwitterActivity extends Activity {
         super.onStart();
 
         // Get latest tweets
-        // TODO: Replace with Elasticsearch
-        loadFromFile();
+        // TODO: Replace with Elasticsearch (done)
+
+        ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
+        try {
+            getTweetsTask.execute("");
+            tweets = getTweetsTask.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        //loadFromFile();
 
         // Binds tweet list with view, so when our array updates, the view updates with it
         adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
